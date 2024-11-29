@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace baibuoi3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void bntthem_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = new ListViewItem(txtho.Text);
+           
+            item.SubItems.Add(txtten.Text);
+            item.SubItems.Add(txtsodienthoai.Text);
+            LVhocsinh.Items.Add(item);
+
+            LVhocsinh.FullRowSelect = true; 
+
+        }
+
+        private void LVhocsinh_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (LVhocsinh.SelectedItems.Count>0)
+            {
+                txtho.Text = LVhocsinh.SelectedItems[0].SubItems[0].Text;
+                txtten.Text = LVhocsinh.SelectedItems[0].SubItems[1].Text;
+                txtsodienthoai.Text = LVhocsinh.SelectedItems[0].SubItems[2].Text;  
+            }
+
+        }
+
+        private void bntxoa_Click(object sender, EventArgs e)
+        {
+            if (LVhocsinh.SelectedItems.Count > 0)
+            {
+                LVhocsinh.Items.Remove(LVhocsinh.SelectedItems[0]); 
+            }
+            else
+            {
+                MessageBox.Show("phai chon it nhat 1 dong");
+            }
+        }
+
+        private void bntsua_Click(object sender, EventArgs e)
+        {
+            if (LVhocsinh.SelectedItems.Count > 0)
+            {
+                LVhocsinh.SelectedItems[0].SubItems[0].Text = txtho.Text;
+                LVhocsinh.SelectedItems[0].SubItems[1].Text = txtten.Text;
+                LVhocsinh.SelectedItems[0].SubItems[2].Text = txtsodienthoai.Text; 
+            }
+            else
+            {
+                MessageBox.Show("phai chon it nhat 1 dong");
+            }
+        }
+    }
+}
