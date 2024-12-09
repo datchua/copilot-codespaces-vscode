@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            
+
+
+        }
+    
+      
+
+        private void btnthem_Click(object sender, EventArgs e)
+        {
+            // Mở form Nhân viên để thêm
+            Form2 employeeForm = new Form2();
+            if (employeeForm.ShowDialog() == DialogResult.OK)
+            {
+                // Sau khi thêm, cập nhật lại ListView
+                ListViewItem newItem = new ListViewItem(new string[] { employeeForm.EmployeeID, employeeForm.EmployeeName, employeeForm.EmployeePosition });
+                listView1.Items.Add(newItem);
+            }
+        }
+
+        private void btnsua_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                // Lấy item đang được chọn
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                Form2 employeeForm = new Form2();
+
+                // Điền thông tin vào form để chỉnh sửa
+                employeeForm.EmployeeID = selectedItem.SubItems[0].Text;
+                employeeForm.EmployeeName = selectedItem.SubItems[1].Text;
+                employeeForm.EmployeePosition = selectedItem.SubItems[2].Text;
+
+                if (employeeForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Sau khi sửa, cập nhật lại ListView
+                    selectedItem.SubItems[1].Text = employeeForm.EmployeeName;
+                    selectedItem.SubItems[2].Text = employeeForm.EmployeePosition;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một nhân viên để sửa.");
+            }
+        }
+
+        private void btnxoa_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                // Xóa item được chọn
+                listView1.Items.Remove(listView1.SelectedItems[0]);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một nhân viên để xóa.");
+            }
+        }
+    }
+}
